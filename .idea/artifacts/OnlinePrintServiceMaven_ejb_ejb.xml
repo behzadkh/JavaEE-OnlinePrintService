@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" name="OnlinePrintServiceMaven-ejb:ejb">
+    <output-path>$PROJECT_DIR$/OnlinePrintServiceMaven-ejb/target</output-path>
+    <root id="archive" name="OnlinePrintServiceMaven-ejb-1.0-SNAPSHOT.jar">
+      <element id="artifact" artifact-name="OnlinePrintServiceMaven-ejb:ejb exploded" />
+    </root>
+  </artifact>
+</component>

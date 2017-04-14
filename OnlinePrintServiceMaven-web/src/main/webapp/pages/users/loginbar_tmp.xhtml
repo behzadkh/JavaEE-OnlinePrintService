@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/template/template.xhtml">
+
+    <ui:define name="loginStatus">
+        <h:form rendered="#{login.loginStatus}">
+            <h:outputText id="usernamep" value="#{login.username}"  />&nbsp;&nbsp;&nbsp;
+            <h:commandButton  id="modaltrigger" value="#{msgs.logout}" action="#{login.logoutAction}" />
+        </h:form>
+
+        <h:form rendered="#{!login.loginStatus}">
+            <h:panelGrid columns="4">
+                <button id="opener">Register</button>
+                &nbsp;&nbsp; 
+                <button id="opener2">Login</button>
+            </h:panelGrid>
+            <div id="dialog" title="Register">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="r-username" value="Username:" />
+                        <h:inputText id="r-username" value="#{register.username}" required="true" />
+                        <h:outputLabel for="r-password" value="Password:" />
+                        <h:inputSecret id="r-password" value="#{register.password}" required="true" />
+                        <h:outputText />
+                        <h:commandButton value="Register" actionListener="#{register.registerAction()}">
+                            <f:ajax execute="r-username r-password" render="@form" />
+                        </h:commandButton>
+                    </h:panelGrid>
+                    <h:messages errorStyle="color:red;" infoStyle="color:green;"/>
+                </h:form>
+            </div>
+            <div id="loginDialog" title="Login">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="username" value="Username:" />
+                        <h:inputText id="username" value="#{login.username}" required="true"/>
+                        <h:outputLabel for="password" value="Password:" />
+                        <h:inputSecret id="password" value="#{login.password}" required="true" />
+                        <h:outputText />
+                        <h:commandButton value="Login" action="#{login.loginAction()}">
+                            <f:ajax execute="username password" render="@form" />
+                        </h:commandButton><br/>
+                    </h:panelGrid>
+                    <h:messages errorStyle="color:red;" infoStyle="color:green;"/>
+                </h:form>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

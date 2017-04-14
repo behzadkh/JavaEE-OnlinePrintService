@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/template/template.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:define name="head">
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#registerModal").on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);  // Button that triggered the modal
+                    var titleData = button.data('title'); // Extract value from data-* attributes
+                    $(this).find('.modal-title').text(titleData + ' Form');
+                });
+            });
+            $(document).ready(function () {
+                $("#loginModal").on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget);  // Button that triggered the modal
+                    var titleData = button.data('title'); // Extract value from data-* attributes
+                    $(this).find('.modal-title').text(titleData + ' Form');
+                });
+            });
+     
+         
+        </script>
+        
+    </ui:define>
+
+
+    <ui:define name="loginStatus">       
+        <h:panelGroup rendered="#{login.loginStatus}">
+            <h:form role="form" onsubmit="indicate()">
+                <h:outputText id="usernamep" value="#{login.username}"  />&nbsp;&nbsp;&nbsp;
+                <h:commandButton styleClass="btn btn-lg btn-primary"  id="modaltrigger" value="Logout" action="#{login.logoutAction}" />
+                <h:commandButton styleClass="btn btn-lg btn-primary" value="Panel" action="#{login.goToMainPage()}" />
+            </h:form>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{!login.loginStatus}">
+
+            <h:panelGrid columns="4">  
+                <a href="#registerModal" class="btn btn-lg btn-primary" data-toggle="modal">#{msgs.register}</a>
+                <a href="#loginModal" class="btn btn-lg btn-primary" data-toggle="modal">#{msgs.login}</a>              
+            </h:panelGrid>
+          
+            
+            <!-- Register Modal HTML -->
+            <div id="registerModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <h:form onsubmit="indicate()">
+                            <h:messages/>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <strong>Registeration</strong>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="control-label" for="rusername" value="#{msgs.username}" />
+                                    <h:inputText styleClass="form-control" id="rusername" value="#{register.username}" required="true" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="control-label" for="r-password" value="#{msgs.password}" />
+                                    <h:inputSecret styleClass="form-control" id="r-password" value="#{register.password}" required="true" />
+                                    <h:outputText />
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">              <!-- p:data-dismiss="modal" p:aria-hidden="true" -->                  
+                                <h:commandButton id="registerBtn"   p:data-dismiss="modal" p:aria-hidden="true"  styleClass="btn btn-primary" value="#{msgs.register}" actionListener="#{register.registerAction()}">
+                                    <f:ajax  execute="rusername r-password" render="@form" />
+                                </h:commandButton>  
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Modal HTML -->
+            <div id="loginModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <h:form role="form" onsubmit="indicate()" >
+                            <h:messages/>
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <strong>Login</strong>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="control-label" for="username" value="#{msgs.username}" />
+                                    <h:inputText styleClass="form-control" id="username" value="#{login.username}" required="true" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel styleClass="control-label" for="password" value="#{msgs.password}" />
+                                    <h:inputSecret styleClass="form-control" id="password" value="#{login.password}" required="true" />
+                                    <h:outputText />
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">                               
+                                <h:commandButton onclick="hide('#loginModal')" id="loginBtn" styleClass="btn btn-primary"  value="#{msgs.login}" action="#{login.loginAction()}">
+
+                                </h:commandButton>                                   
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </h:panelGroup>
+    </ui:define>
+
+    <ui:define name="banner">
+        <img src="resources/images/banner.jpg" alt="" width="940" height="200" />
+    </ui:define>
+    <ui:define name="content_bottom">
+
+        <div class="content_left fl-lt">
+            <h2>Welcome to our WebSite</h2>
+            <p> This WebSite facilitates online print from everywhere you would like in conveniently so that you get a print of your document wherever you are keen on.</p>
+        </div>
+        <div class="content_right fl-rt">
+            <h2>Our Services</h2>
+            <h3>color printers</h3>
+            <p>We have got various color printers.For example from 128 colors till 1,256,000colors.</p>
+            <h3>small,medium,large printers</h3>
+            <p>We have also got printers in different sizes for various paper. </p>
+            <h3>Appropriate Cost</h3>
+            <p>We have attempted to get cost lower that other places.</p>
+        </div>
+        <div class="clear"></div>
+    </ui:define>
+</ui:composition>
+

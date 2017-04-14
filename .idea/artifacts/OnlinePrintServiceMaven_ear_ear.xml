@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="ear" name="OnlinePrintServiceMaven-ear:ear">
+    <output-path>$PROJECT_DIR$/OnlinePrintServiceMaven-ear/target</output-path>
+    <root id="archive" name="OnlinePrintServiceMaven-ear-1.0-SNAPSHOT.ear">
+      <element id="artifact" artifact-name="OnlinePrintServiceMaven-ear:ear exploded" />
+    </root>
+  </artifact>
+</component>

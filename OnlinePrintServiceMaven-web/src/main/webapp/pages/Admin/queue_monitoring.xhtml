@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:form onsubmit="indicate()">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Queue Status</strong>
+                    <h:link >Refresh
+                        <f:ajax render="queueTbl"/>
+                    </h:link>
+                </div>
+                <!-- -->
+                <h:dataTable id="queueTbl" styleClass="table table-bordered order-table centerTextAlign"
+                             value="#{queueManagement.msgListFromJmsFactory}" var="msg"
+                             headerClass="order-table-header"
+                             columnClasses="column_padding"
+                             rowClasses="order-table-odd-row,order-table-even-row">
+
+                    <h:column class="col-md-2 ">
+                        <f:facet name="header">#</f:facet>
+                        #{queueManagement.msgModel.rowIndex + 1}
+                    </h:column>
+                    <h:column class="col-md-2 ">
+                        <f:facet name="header">Username</f:facet>
+                        <h:outputText value="#{msg.username}"/>
+                    </h:column>
+
+                    <h:column class="col-md-2 ">
+                        <f:facet name="header">filename</f:facet>
+                        <h:outputText
+                                value=" #{msg.shortFilename}"
+                                p:data-toggle="tooltip" p:data-placement="bottom"
+                                p:title="#{msg.filename}"/>
+                    </h:column>
+                    <h:column class="col-md-2 centerTextAlign">
+                        <f:facet name="header">MSG_ID</f:facet>
+                        <h:outputText value="#{msg.jmsMessageId}"/>
+                    </h:column>
+                    <h:column class="col-md-2 ">
+                        <f:facet name="header">Order_ID</f:facet>
+                        <h:outputText value="#{msg.orderId}"/>
+
+                    </h:column>
+
+
+                </h:dataTable>
+            </div>
+
+        </div>
+
+    </h:form>
+
+</ui:composition>

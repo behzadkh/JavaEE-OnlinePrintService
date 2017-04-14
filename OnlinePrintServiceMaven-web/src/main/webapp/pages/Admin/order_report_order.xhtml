@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:form>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>#{msgs['customer.reportOfPrints']}</strong>
+                </div>
+                <!-- -->
+                <h:dataTable styleClass="table table-bordered order-table centerTextAlign" id="orderListId"
+                             value="#{orderList.listOfUserOrders}" var="order"
+                             headerClass="order-table-header"
+                             columnClasses="column_padding"
+                             rowClasses="order-table-odd-row,order-table-even-row">
+
+                    <h:column class="col-md-2 ">
+                        <f:facet name="header">###</f:facet>
+                        #{orderList.model.rowIndex+1}
+                    </h:column>
+                    <h:column class="col-md-2 ">
+                        <f:facet name="header">#{msgs['fileName']}</f:facet>
+                        <h:outputText
+                                value=" #{order.fileupload.shortFileName}"
+                                p:data-toggle="tooltip" p:data-placement="bottom"
+                                p:title="#{order.fileupload.fileName}"/>
+                    </h:column>
+                    <h:column class="col-md-2 ">
+                        <f:facet name="header">#{msgs['status']}</f:facet>
+                        <h:outputText value=" #{order.status}"/>
+
+                    </h:column>
+                    <h:column class="col-md-2 ">
+                        <f:facet name="header">#{msgs['orderDateTime']}</f:facet>
+                        <h:outputText value="#{order.orderDate}"/>
+
+                    </h:column>
+                    <h:column class="col-md-2 ">
+                        <f:facet name="header">#{msgs['deliverDateTime']}</f:facet>
+                        <h:outputText value="#{order.deliverDate}"/>
+                    </h:column>
+                    <h:column class="col-md-2 ">
+                        <f:facet name="header">#{msgs['operation']}</f:facet>
+                        <h:panelGrid columns="3">
+                            <h:commandLink value="#{msgs['removeButton']}" action="#{orderList.removeOrder(order)}"
+                                           onclick=" if (!confirm('Are you sure?'))
+                                        return false;"/>
+                            <h:outputText value="&nbsp;&nbsp;"/>
+                        </h:panelGrid>
+                    </h:column>
+                </h:dataTable>
+
+            </div>
+            <h:outputText value="#{orderList.message}"/>
+        </div>
+    </h:form>
+
+</ui:composition>
