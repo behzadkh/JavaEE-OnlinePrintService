@@ -2,10 +2,9 @@
 package ir.org.acm.exam.khosrojerdi.dao.impls;
 
 import ir.org.acm.exam.khosrojerdi.dao.FileuploadDAO;
-import ir.org.acm.exam.khosrojerdi.dao.OrderDaoInf;
+import ir.org.acm.exam.khosrojerdi.dao.OrderDAO;
 import ir.org.acm.exam.khosrojerdi.dao.local.OrderDaoLocalFacadeInf;
 import ir.org.acm.exam.khosrojerdi.dao.remote.OrderDaoRemoteFacadeInterface;
-import ir.org.acm.exam.khosrojerdi.entity.FileuploadOPS;
 import ir.org.acm.exam.khosrojerdi.entity.OrderOPS;
 import ir.org.acm.exam.khosrojerdi.entity.UserOPS;
 
@@ -22,7 +21,7 @@ import java.util.List;
 public class OrderOPSFacadeImp implements OrderDaoLocalFacadeInf, OrderDaoRemoteFacadeInterface {
 
     @EJB
-    private OrderDaoInf orderDAO;
+    private OrderDAO orderDAO;
 
     @EJB
     private FileuploadDAO fileuploadDAO;

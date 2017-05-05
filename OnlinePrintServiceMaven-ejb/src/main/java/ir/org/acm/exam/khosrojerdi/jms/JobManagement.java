@@ -46,7 +46,7 @@ public class JobManagement implements JobManagementInf {
         WebserviceCheckerJob webserviceCheckerJob = new WebserviceCheckerJob();
         QueueConsumer queueConsumer = new QueueConsumer();
         execService.scheduleWithFixedDelay(webserviceCheckerJob, 20, 1, TimeUnit.SECONDS);
-        execService.scheduleAtFixedRate(queueConsumer, 20, 10, TimeUnit.SECONDS);
+        execService.scheduleWithFixedDelay(queueConsumer, 20, 10, TimeUnit.SECONDS);
     }
 
     @PreDestroy

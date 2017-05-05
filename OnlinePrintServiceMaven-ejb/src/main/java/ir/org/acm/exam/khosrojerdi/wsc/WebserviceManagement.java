@@ -5,7 +5,6 @@
  */
 package ir.org.acm.exam.khosrojerdi.wsc;
 
-import ir.org.acm.exam.khosrojerdi.dao.OrderDaoInf;
 import ir.org.acm.exam.khosrojerdi.dao.local.OrderDaoLocalFacadeInf;
 import ir.org.acm.exam.khosrojerdi.dao.local.PrinterDaoLocalFacadeInf;
 import ir.org.acm.exam.khosrojerdi.entity.OrderOPS;
@@ -39,7 +38,7 @@ import java.util.logging.Logger;
 public class WebserviceManagement implements WebserviceManagementInf {
     private static final Logger LOGGER = Logger.getLogger(WebserviceManagement.class.getName());
 
-    @EJB(lookup = OrderDaoLocalFacadeInf.JNDI)
+    @EJB
     private OrderDaoLocalFacadeInf daoOrder;
 
     @EJB
@@ -55,20 +54,22 @@ public class WebserviceManagement implements WebserviceManagementInf {
     public void print(String msg, long orderId) {
         LOGGER.log(Level.INFO, "orderId:" + orderId);
         boolean isLoop = true;
-        while (isLoop){
+        while (isLoop) {
+            int test = 0;
             order = daoOrder.find(orderId);
-            if(order != null){
+            if (order != null) {
                 isLoop = false;
-            }
-            else {
+            } else {
                 try {
-                    TimeUnit.SECONDS.sleep(2);
+                    test += 500;
+                    LOGGER.log(Level.INFO, "wainting for findOrder: " + test + " ms");
+                    TimeUnit.MILLISECONDS.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
-        if(order.isDelete())
+        if (order.isDelete())
             return;
         LOGGER.log(Level.INFO, "WebserviceManagement is running");
         List<PrinterOPS> printerList = printerDao.findPrinterWithMinimumJob();
@@ -93,17 +94,17 @@ public class WebserviceManagement implements WebserviceManagementInf {
                     if (result) {
                         order.setStatus(StatusEnum.SUCCESS);
                         order.setDeliverDate(new Date());
+                        order.setPrinter(printer);
                     } else {
                         order.setStatus(StatusEnum.ERROR);
                     }
                 } catch (Exception ex) {
-                    LOGGER.log(Level.INFO, "WebserviceManagement has got Error line 71 ");
+                    LOGGER.log(Level.SEVERE, "WebserviceManagement " + ex.getMessage());
                     if (order != null) {
                         try {
                             order.setStatus(StatusEnum.ERROR);
 
                         } catch (Exception ex1) {
-                            System.out.println("Error ocurred here line 77 - webservice management");
                             LOGGER.log(Level.SEVERE, null, ex1);
                         }
                     }
@@ -119,7 +120,6 @@ public class WebserviceManagement implements WebserviceManagementInf {
         try {
             daoOrder.update(order);
         } catch (Exception ex) {
-            System.out.println("Error ocurred here line 93 - webservice management");
             LOGGER.log(Level.SEVERE, null, ex);
         }
     }
@@ -162,7 +162,7 @@ public class WebserviceManagement implements WebserviceManagementInf {
             return false;
     }
 
-    private void prepareSth(){
+    private void prepareSth() {
 
     }
 }
